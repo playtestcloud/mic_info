@@ -1,0 +1,52 @@
+# Defines a set of lint rules for Dart projects to improve code quality and consistency.
+
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - 'build/**' # Excludes generated files from analysis
+
+linter:
+  rules:
+    # Core rules
+    always_declare_return_types: true
+    avoid_empty_else: true
+    avoid_init_to_null: true
+    avoid_print: true
+    await_only_futures: true
+    curly_braces_in_flow_control_structures: true
+    prefer_final_locals: true
+    prefer_const_constructors: true
+    prefer_const_literals_to_create_immutables: true
+
+    # Error prevention and performance
+    avoid_function_literals_in_foreach_calls: true
+    avoid_single_cascade_in_expression_statements: true
+    unnecessary_null_aware_assignments: true
+    prefer_final_fields: true
+
+    # Readability and maintainability
+    lines_longer_than_80_chars: false  # Allows longer lines (modify based on your preference)
+    prefer_is_not_empty: true
+    prefer_typing_uninitialized_variables: true
+    sort_child_properties_last: true
+
+    # Effective dart
+    unnecessary_this: true
+    avoid_returning_null_for_future: true
+    avoid_bool_literals_in_conditional_expressions: true
+    use_setters_to_change_properties: true
+    avoid_return_types_on_setters: true
+
+    # Flutter specific
+    avoid_unnecessary_containers: true
+    sized_box_for_whitespace: true
+    prefer_const_declarations: true
+    avoid_redundant_argument_values: true
+    use_key_in_widget_constructors: true
+    avoid_positional_boolean_parameters: true
+
+    # Documentation
+    public_member_api_docs: true
+
+# Additional configuration for your project's needs can be added here.
