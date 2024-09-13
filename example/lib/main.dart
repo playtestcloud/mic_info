@@ -56,30 +56,40 @@ class _MyAppState extends State<MyApp> {
           child: Text("Microphone's info :- \n$mic"),
         ),
         bottomNavigationBar: BottomNavigationBar(
-          onTap: (itemIndex){
-            if(itemIndex == 0){
+          onTap: (itemIndex) {
+            if (itemIndex == 0) {
               getDefault();
-            }else if(itemIndex == 1){
+            } else if (itemIndex == 1) {
               getWired();
-            }else if(itemIndex == 2){
+            } else if (itemIndex == 2) {
               getBluetooth();
             }
           },
           currentIndex: index,
           items: const [
             BottomNavigationBarItem(
-        activeIcon: Icon(Icons.phone_android, color: Colors.blueAccent,),
+                activeIcon: Icon(
+                  Icons.phone_android,
+                  color: Colors.blueAccent,
+                ),
                 icon: Icon(Icons.phone_android),
                 label: 'Defaut'),
             BottomNavigationBarItem(
-                activeIcon: Icon(Icons.headphones,
-                  color: Colors.blueAccent,),
-                icon: Icon(Icons.headphones), label: 'Wired'),
+                activeIcon: Icon(
+                  Icons.headphones,
+                  color: Colors.blueAccent,
+                ),
+                icon: Icon(Icons.headphones),
+                label: 'Wired'),
             BottomNavigationBarItem(
-                activeIcon: Icon(Icons.bluetooth, color: Colors.blueAccent,),
+                activeIcon: Icon(
+                  Icons.bluetooth,
+                  color: Colors.blueAccent,
+                ),
                 icon: Icon(Icons.bluetooth),
                 label: 'Bluetooth'),
-          ],),
+          ],
+        ),
       ),
     );
   }

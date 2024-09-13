@@ -10,7 +10,7 @@ class Device {
   Map<String, String> toMap() {
     return {
       'productName': productName, // Map the product name
-      'id': id,                   // Map the id
+      'id': id, // Map the id
     };
   }
 
@@ -18,8 +18,9 @@ class Device {
   // The map might contain dynamic types, so type-casting is necessary
   factory Device.fromMap(Map<String, dynamic> map) {
     return Device(
-      productName: map['productName'] ?? '', // If 'productName' is null, default to an empty string
-      id: map['id'] ?? '',                   // If 'id' is null, default to an empty string
+      productName: map['productName'] ??
+          '', // If 'productName' is null, default to an empty string
+      id: map['id'] ?? '', // If 'id' is null, default to an empty string
     );
   }
 

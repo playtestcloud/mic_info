@@ -4,7 +4,6 @@ import 'model/mic_info_model.dart';
 /// A class that provides functionality to retrieve microphone information from the platform.
 /// It uses the platform interface to fetch data about connected microphones and converts them to `Device` objects.
 class MicInfo {
-
   /// Retrieves the default microphone available on the device.
   /// It fetches the data via the platform interface, converts it into a list of `Device` objects, and returns it.
   Future<List<Device>> getDefaultMicrophone() async {
@@ -19,8 +18,9 @@ class MicInfo {
       // Convert each item in the list to a Map with 'productName' and 'id'.
       List<Map<String, dynamic>> mapList = temp.map((obj) {
         return {
-          'productName': obj["productName"] ?? '',  // Default to an empty string if null.
-          'id': obj["id"] ?? '',                    // Default to an empty string if null.
+          'productName':
+              obj["productName"] ?? '', // Default to an empty string if null.
+          'id': obj["id"] ?? '', // Default to an empty string if null.
         };
       }).toList();
 
@@ -48,8 +48,9 @@ class MicInfo {
       // Convert each item in the list to a Map with 'productName' and 'id'.
       List<Map<String, dynamic>> mapList = temp.map((obj) {
         return {
-          'productName': obj["productName"] ?? '',  // Default to an empty string if null.
-          'id': obj["id"] ?? '',                    // Default to an empty string if null.
+          'productName':
+              obj["productName"] ?? '', // Default to an empty string if null.
+          'id': obj["id"] ?? '', // Default to an empty string if null.
         };
       }).toList();
 
@@ -77,8 +78,9 @@ class MicInfo {
       // Convert each item in the list to a Map with 'productName' and 'id'.
       List<Map<String, dynamic>> mapList = temp.map((obj) {
         return {
-          'productName': obj["productName"] ?? '',  // Default to an empty string if null.
-          'id': obj["id"] ?? '',                    // Default to an empty string if null.
+          'productName':
+              obj["productName"] ?? '', // Default to an empty string if null.
+          'id': obj["id"] ?? '', // Default to an empty string if null.
         };
       }).toList();
 

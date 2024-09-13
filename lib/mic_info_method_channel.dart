@@ -16,7 +16,8 @@ class MethodChannelMicInfo extends MicInfoPlatform {
   Future<List> getDefaultMicrophone() async {
     // Invoke the 'getDefaultMicrophone' method on the method channel
     // The native platform will return a list of microphones, or an empty list if none found.
-    List list = (await methodChannel.invokeMethod<List>('getDefaultMicrophone')) ?? [];
+    List list =
+        (await methodChannel.invokeMethod<List>('getDefaultMicrophone')) ?? [];
     return list;
   }
 
@@ -25,7 +26,8 @@ class MethodChannelMicInfo extends MicInfoPlatform {
   Future<List> getWiredMicrophone() async {
     // Invoke the 'getWiredMicrophone' method on the method channel
     // The native platform will return a list of wired microphones, or an empty list if none found.
-    List list = (await methodChannel.invokeMethod<List>('getWiredMicrophone')) ?? [];
+    List list =
+        (await methodChannel.invokeMethod<List>('getWiredMicrophone')) ?? [];
     return list;
   }
 
@@ -34,7 +36,9 @@ class MethodChannelMicInfo extends MicInfoPlatform {
   Future<List> getBluetoothMicrophone() async {
     // Invoke the 'getBluetoothMicrophone' method on the method channel
     // The native platform will return a list of Bluetooth microphones, or an empty list if none found.
-    List list = (await methodChannel.invokeMethod<List>('getBluetoothMicrophone')) ?? [];
+    List list =
+        (await methodChannel.invokeMethod<List>('getBluetoothMicrophone')) ??
+            [];
     return list;
   }
 }

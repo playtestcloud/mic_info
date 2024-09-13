@@ -106,3 +106,4 @@ For iOS, the plugin uses AVAudioSession to retrieve microphone information, incl
 
 ## Contributions
 Contributions are welcome! Please feel free to submit pull requests or open issues.
+- github: https://github.com/devakar-dhiman/mic_info.git
