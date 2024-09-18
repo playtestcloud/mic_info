@@ -82,7 +82,7 @@ class MicInfoPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
 
     for (device in devices) {
       // Check if the device is a wired headset microphone
-      if (device.type == AudioDeviceInfo.TYPE_WIRED_HEADSET) {
+      if (device.type == AudioDeviceInfo.TYPE_WIRED_HEADSET || device.type == AudioDeviceInfo.TYPE_USB_HEADSET) {
         Log.d("dhiman", "getWiredMicrophone: ${device.productName} ${device.id}")
         // Add the microphone information (product name and id) to the list
         microphoneNames.add(mapOf("productName" to device.productName.toString(), "id" to device.id.toString()))

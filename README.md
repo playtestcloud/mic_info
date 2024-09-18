@@ -4,9 +4,10 @@ The **Mic Info Plugin** allows Flutter applications to retrieve information abou
 
 ## Features
 
-- Retrieve the list of built-in (default) microphones.
-- Retrieve the list of wired microphones (e.g., headset mics).
-- Retrieve the list of Bluetooth microphones.
+- **Built-in Microphone Detection**: Retrieve the default microphones available on the device.
+- **Wired and USB Microphone Detection**: Detect wired headsets, including USB connector microphones.
+- **Bluetooth Microphone Detection**: Identify and list Bluetooth microphones for hands-free audio input.
+- **Cross-Platform Support**: Works seamlessly on both Android and iOS.
 
 ## Platforms Supported
 

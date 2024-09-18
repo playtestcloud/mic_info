@@ -1,18 +1,6 @@
 name: mic_info
-description: |
-  Mic Info Plugin is a Flutter plugin for retrieving information about connected microphones on Android and iOS devices.
-  It allows developers to detect and list details about built-in, wired, and Bluetooth microphones.
-  The plugin also handles necessary permissions, making it easy to integrate microphone detection functionality into your Flutter applications.
-
-  Features:
-  - Detect and list built-in (default) microphones.
-  - Detect and list wired microphones (e.g., headset microphones).
-  - Detect and list Bluetooth microphones.
-  - Cross-platform support for Android and iOS.
-  - Simple API for querying microphone information.
-  - Permission handling for microphone access on both Android and iOS.
-
-version: 0.0.1
+description: Mic Info Plugin is a Flutter plugin that retrieves information about connected microphones on Android and iOS. It supports detecting built-in, wired (including USB connector microphones), and Bluetooth microphones, making it ideal for applications requiring audio input management. With cross-platform support, this plugin provides a simple API to retrieve microphone product names and IDs.
+version: 0.0.2
 homepage: https://github.com/devakar-dhiman/mic_info.git
 
 environment:

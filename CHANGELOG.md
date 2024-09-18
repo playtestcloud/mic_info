@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.2] Detect **USB connector microphones**
+### Added
+- Logic to detect USB connector microphones as part of wired microphones.
+- Updated detection for `AudioDeviceInfo.TYPE_WIRED_HEADSET` and `AudioDeviceInfo.TYPE_USB_HEADSET` under the category of wired microphones.
+
+### Fixed
+- Minor code improvements and optimizations.
+
 ## [0.0.1] Initial release of the **Mic Info Plugin**.
 - Added support for retrieving default, wired, and Bluetooth microphone information on Android and iOS platforms.
 - Provided methods to:
