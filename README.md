@@ -1,9 +1,10 @@
 # Mic Info Plugin
 
-The **Mic Info Plugin** allows Flutter applications to retrieve information about connected microphones on Android and iOS devices, including default, wired, and Bluetooth microphones.
+The **Mic Info Plugin** allows Flutter applications to retrieve information about connected microphones on Android and iOS devices, including active, default, wired, and Bluetooth microphones.
 
 ## Features
 
+- **Active Microphone Detection**: Retrieve the active microphones that have an active recording in progress.
 - **Built-in Microphone Detection**: Retrieve the default microphones available on the device.
 - **Wired and USB Microphone Detection**: Detect wired headsets, including USB connector microphones.
 - **Bluetooth Microphone Detection**: Identify and list Bluetooth microphones for hands-free audio input.
@@ -11,22 +12,8 @@ The **Mic Info Plugin** allows Flutter applications to retrieve information abou
 
 ## Platforms Supported
 
-- **Android**: API Level 23 (Android 6.0) and above.
+- **Android**: API Level 24 (Android 7.0) and above.
 - **iOS**: iOS 10.0 and above.
-
-## Installation
-
-Add the following to your `pubspec.yaml` file:
-
-```yaml
-dependencies:
-  mic_info: ^0.0.1  # Use the latest version
-```
-
-Run the following command to install the package:
-```
-flutter pub get
-```
 
 ## Usage
 ### Import the Plugin  
@@ -42,53 +29,40 @@ import 'package:mic_info/mic_info.dart';
 import 'package:mic_info/model/mic_info_model.dart';
 
 void getMicrophoneInfo() async {
-  final micInfo = MicInfo();
+  // Retrieve Active Microphones
+  List<MicInfoDevice> activeMicrophones = await MicInfo.getActiveMicrophones();
+  print("Active Microphones: $activeMicrophones");
 
-  // Retrieve Default Microphone
-  List<Device> defaultMicrophones = await micInfo.getDefaultMicrophone();
+  // Retrieve Bluetooth Microphones
+  List<MicInfoDevice> bluetoothMicrophones = await MicInfo.getBluetoothMicrophones();
+  print("Bluetooth Microphones: $bluetoothMicrophones");
+
+  // Retrieve Default Microphones
+  List<MicInfoDevice> defaultMicrophones = await MicInfo.getDefaultMicrophones();
   print("Default Microphones: $defaultMicrophones");
 
-  // Retrieve Wired Microphone
-  List<Device> wiredMicrophones = await micInfo.getWiredMicrophone();
+  // Retrieve Wired Microphones
+  List<MicInfoDevice> wiredMicrophones = await MicInfo.getWiredMicrophones();
   print("Wired Microphones: $wiredMicrophones");
-
-  // Retrieve Bluetooth Microphone
-  List<Device> bluetoothMicrophones = await micInfo.getBluetoothMicrophone();
-  print("Bluetooth Microphones: $bluetoothMicrophones");
 }
 ```
 
-### Device Model
-The information about each microphone is returned as a list of Device objects:
-```
-class Device {
-  String productName;
-  String id;
-
-  Device({required this.productName, required this.id});
-
-  @override
-  String toString() {
-    return 'Device(productName: $productName, id: $id)';
-  }
-}
-```
-Each device contains:
-
-- productName: The name of the microphone.
-- id: The unique identifier of the microphone.
+### MicInfoDevice Model
+The information about each microphone is returned as a list of `MicInfoDevice` objects. Each device contains:
+- `productName`: The name of the microphone.
+- `id`: The unique identifier of the microphone.
 
 ### Permissions
-Ensure that you have the appropriate permissions for accessing the microphone on both Android and iOS.
+Ensure that you have the appropriate permissions for accessing the microphone on both Android and iOS. This plugin doesn't handle permissions.
 
 #### Android
-Add the following permission in your AndroidManifest.xml file:
+Add the following permission in your `AndroidManifest.xml` file:
 ```
 <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 ```
 
 #### iOS
-In the ios/Runner/Info.plist file, add:
+In the `ios/Runner/Info.plist` file, add:
 ```
 <key>NSMicrophoneUsageDescription</key>
 <string>This app needs access to your microphone.</string>
@@ -96,15 +70,15 @@ In the ios/Runner/Info.plist file, add:
 
 ## Platform-Specific Implementation
 ### Android
-This plugin uses AudioManager and AudioDeviceInfo to detect connected microphones on Android devices.
+This plugin uses `AudioManager` and `AudioDeviceInfo` to detect connected microphones on Android devices.
 
 ### iOS
-For iOS, the plugin uses AVAudioSession to retrieve microphone information, including Bluetooth and wired devices.
+For iOS, the plugin uses `AVAudioSession` to retrieve microphone information, including Bluetooth and wired devices.
 
 ## Troubleshooting
--Ensure that the app has permission to use the microphone.
--Check that the connected microphones are supported by your device.
+- Ensure that the app has permission to use the microphone.
+- Check that the connected microphones are supported by your device.
 
 ## Contributions
 Contributions are welcome! Please feel free to submit pull requests or open issues.
-- github: https://github.com/devakar-dhiman/mic_info.git
+- GitHub: https://github.com/devakar-dhiman/mic_info.git

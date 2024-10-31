@@ -1,93 +1,78 @@
-import 'mic_info_platform_interface.dart';
-import 'model/mic_info_model.dart';
+import 'package:mic_info/mic_info_platform_interface.dart';
+import 'package:mic_info/model/mic_info_model.dart';
 
 /// A class that provides functionality to retrieve microphone information from the platform.
 /// It uses the platform interface to fetch data about connected microphones and converts them to `Device` objects.
 class MicInfo {
+  // Disable public constructor.
+  MicInfo._();
+
   /// Retrieves the default microphone available on the device.
   /// It fetches the data via the platform interface, converts it into a list of `Device` objects, and returns it.
-  Future<List<Device>> getDefaultMicrophone() async {
+  static Future<List<MicInfoDevice>> getActiveMicrophones() async {
     // Initialize an empty list of devices.
-    List<Device> devices = [];
+    final devices = <MicInfoDevice>[];
 
-    // Get the microphone data from the platform interface.
-    List temp = await MicInfoPlatform.instance.getDefaultMicrophone();
+    // Get the active microphones data from the platform interface.
+    final temp = await MicInfoPlatform.instance.getActiveMicrophones();
 
-    // Check if the data is not empty.
-    if (temp.isNotEmpty) {
-      // Convert each item in the list to a Map with 'productName' and 'id'.
-      List<Map<String, dynamic>> mapList = temp.map((obj) {
-        return {
-          'productName':
-              obj["productName"] ?? '', // Default to an empty string if null.
-          'id': obj["id"] ?? '', // Default to an empty string if null.
-        };
-      }).toList();
-
-      // Convert each map to a Device object and add it to the devices list.
-      for (var element in mapList) {
-        devices.add(Device.fromMap(element));
-      }
+    // Convert each device object and add it to the devices list.
+    for (final device in temp) {
+      devices.add(MicInfoDevice.fromMap(device));
     }
 
     // Return the list of devices.
     return devices;
   }
 
-  /// Retrieves the wired microphone (e.g., headset) available on the device.
+  /// Retrieves the Bluetooth microphones available on the device.
   /// It fetches the data via the platform interface, converts it into a list of `Device` objects, and returns it.
-  Future<List<Device>> getWiredMicrophone() async {
+  static Future<List<MicInfoDevice>> getBluetoothMicrophones() async {
     // Initialize an empty list of devices.
-    List<Device> devices = [];
+    final List<MicInfoDevice> devices = [];
 
-    // Get the wired microphone data from the platform interface.
-    List temp = await MicInfoPlatform.instance.getWiredMicrophone();
+    // Get the Bluetooth microphones data from the platform interface.
+    final List temp = await MicInfoPlatform.instance.getBluetoothMicrophones();
 
-    // Check if the data is not empty.
-    if (temp.isNotEmpty) {
-      // Convert each item in the list to a Map with 'productName' and 'id'.
-      List<Map<String, dynamic>> mapList = temp.map((obj) {
-        return {
-          'productName':
-              obj["productName"] ?? '', // Default to an empty string if null.
-          'id': obj["id"] ?? '', // Default to an empty string if null.
-        };
-      }).toList();
-
-      // Convert each map to a Device object and add it to the devices list.
-      for (var element in mapList) {
-        devices.add(Device.fromMap(element));
-      }
+    // Convert each device object and add it to the devices list.
+    for (final device in temp) {
+      devices.add(MicInfoDevice.fromMap(device));
     }
 
     // Return the list of devices.
     return devices;
   }
 
-  /// Retrieves the Bluetooth microphone available on the device.
+  /// Retrieves the default microphones available on the device.
   /// It fetches the data via the platform interface, converts it into a list of `Device` objects, and returns it.
-  Future<List<Device>> getBluetoothMicrophone() async {
+  static Future<List<MicInfoDevice>> getDefaultMicrophones() async {
     // Initialize an empty list of devices.
-    List<Device> devices = [];
+    final List<MicInfoDevice> devices = [];
 
-    // Get the Bluetooth microphone data from the platform interface.
-    List temp = await MicInfoPlatform.instance.getBluetoothMicrophone();
+    // Get the microphones data from the platform interface.
+    final List temp = await MicInfoPlatform.instance.getDefaultMicrophones();
 
-    // Check if the data is not empty.
-    if (temp.isNotEmpty) {
-      // Convert each item in the list to a Map with 'productName' and 'id'.
-      List<Map<String, dynamic>> mapList = temp.map((obj) {
-        return {
-          'productName':
-              obj["productName"] ?? '', // Default to an empty string if null.
-          'id': obj["id"] ?? '', // Default to an empty string if null.
-        };
-      }).toList();
+    // Convert each device object and add it to the devices list.
+    for (final device in temp) {
+      devices.add(MicInfoDevice.fromMap(device));
+    }
 
-      // Convert each map to a Device object and add it to the devices list.
-      for (var element in mapList) {
-        devices.add(Device.fromMap(element));
-      }
+    // Return the list of devices.
+    return devices;
+  }
+
+  /// Retrieves the wired microphones (e.g., headset) available on the device.
+  /// It fetches the data via the platform interface, converts it into a list of `Device` objects, and returns it.
+  static Future<List<MicInfoDevice>> getWiredMicrophones() async {
+    // Initialize an empty list of devices.
+    final List<MicInfoDevice> devices = [];
+
+    // Get the wired microphones data from the platform interface.
+    final List temp = await MicInfoPlatform.instance.getWiredMicrophones();
+
+    // Convert each device object and add it to the devices list.
+    for (final device in temp) {
+      devices.add(MicInfoDevice.fromMap(device));
     }
 
     // Return the list of devices.

@@ -14,34 +14,40 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final _micInfoPlugin = MicInfo();
-  List<Device> mic = [];
+  List<MicInfoDevice> mics = <MicInfoDevice>[];
   int index = 0;
 
   @override
   void initState() {
-    getDefault();
     super.initState();
+    getActive();
   }
 
-  void getDefault() async {
-    mic = await _micInfoPlugin.getDefaultMicrophone();
+  void getActive() async {
+    mics = await MicInfo.getActiveMicrophones();
     setState(() {
       index = 0;
     });
   }
 
-  void getWired() async {
-    mic = await _micInfoPlugin.getWiredMicrophone();
+  void getBluetooth() async {
+    mics = await MicInfo.getBluetoothMicrophones();
     setState(() {
       index = 1;
     });
   }
 
-  void getBluetooth() async {
-    mic = await _micInfoPlugin.getBluetoothMicrophone();
+  void getDefault() async {
+    mics = await MicInfo.getDefaultMicrophones();
     setState(() {
       index = 2;
+    });
+  }
+
+  void getWired() async {
+    mics = await MicInfo.getWiredMicrophones();
+    setState(() {
+      index = 3;
     });
   }
 
@@ -50,44 +56,57 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('Microphone info'),
         ),
         body: Center(
-          child: Text("Microphone's info :- \n$mic"),
+          child: Column(
+            children: <Widget>[
+              if (mics.isEmpty)
+                const Text('No microphones for the selected category'),
+              for (final mic in mics)
+                Text('${mic.productName} (${mic.id})'),
+            ],
+          ),
         ),
         bottomNavigationBar: BottomNavigationBar(
           onTap: (itemIndex) {
-            if (itemIndex == 0) {
-              getDefault();
-            } else if (itemIndex == 1) {
-              getWired();
-            } else if (itemIndex == 2) {
-              getBluetooth();
+            switch (itemIndex) {
+              case 0:
+                getActive();
+                break;
+              case 1:
+                getBluetooth();
+                break;
+              case 2:
+                getDefault();
+                break;
+              case 3:
+                getWired();
+                break;
             }
           },
           currentIndex: index,
-          items: const [
+          items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-                activeIcon: Icon(
-                  Icons.phone_android,
-                  color: Colors.blueAccent,
-                ),
-                icon: Icon(Icons.phone_android),
-                label: 'Defaut'),
+              backgroundColor: Colors.indigo,
+              icon: Icon(Icons.mic),
+              label: 'Active',
+            ),
             BottomNavigationBarItem(
-                activeIcon: Icon(
-                  Icons.headphones,
-                  color: Colors.blueAccent,
-                ),
-                icon: Icon(Icons.headphones),
-                label: 'Wired'),
+              backgroundColor: Colors.indigo,
+              icon: Icon(Icons.bluetooth),
+              label: 'Bluetooth',
+            ),
             BottomNavigationBarItem(
-                activeIcon: Icon(
-                  Icons.bluetooth,
-                  color: Colors.blueAccent,
-                ),
-                icon: Icon(Icons.bluetooth),
-                label: 'Bluetooth'),
+              backgroundColor: Colors.indigo,
+              icon: Icon(Icons.phone_android),
+              label: 'Default',
+            ),
+            BottomNavigationBarItem(
+              backgroundColor: Colors.indigo,
+              icon: Icon(Icons.headset_mic),
+              label: 'Wired',
+            ),
           ],
         ),
       ),

@@ -1,32 +1,32 @@
-class Device {
-  // Class properties for the product name and id of the device
-  String productName;
-  String id;
+/// The information of a microphone device.
+final class MicInfoDevice {
+  /// The id of the device.
+  final String id;
 
-  // Constructor to initialize the product name and id, both required
-  Device({required this.productName, required this.id});
+  /// The name of the device.
+  final String productName;
 
-  // Method to convert a Device object to a Map (useful for serialization)
+  /// Default const constructor.
+  const MicInfoDevice({required this.id, required this.productName});
+
+  /// Method to convert a Device object to a Map (useful for serialization)
   Map<String, String> toMap() {
-    return {
-      'productName': productName, // Map the product name
-      'id': id, // Map the id
+    return <String, String>{
+      'id': id,
+      'productName': productName,
     };
   }
 
-  // Factory constructor to create a Device object from a Map (useful for deserialization)
-  // The map might contain dynamic types, so type-casting is necessary
-  factory Device.fromMap(Map<String, dynamic> map) {
-    return Device(
-      productName: map['productName'] ??
-          '', // If 'productName' is null, default to an empty string
-      id: map['id'] ?? '', // If 'id' is null, default to an empty string
+  /// Factory constructor to create a [MicInfoDevice] object from the [Map] returned from the native side.
+  factory MicInfoDevice.fromMap(Map<dynamic, dynamic> map) {
+    return MicInfoDevice(
+      id: (map['id'] as String?) ?? '',
+      productName: (map['productName'] as String?) ?? '',
     );
   }
 
-  // Override the toString method to return a readable string representation of the Device object
   @override
   String toString() {
-    return 'productName: $productName, id: $id\n';
+    return 'MicInfoDevice(id: $id, productName: $productName)';
   }
 }
