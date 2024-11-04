@@ -49,8 +49,8 @@ void getMicrophoneInfo() async {
 
 ### MicInfoDevice Model
 The information about each microphone is returned as a list of `MicInfoDevice` objects. Each device contains:
-- `productName`: The name of the microphone.
 - `id`: The unique identifier of the microphone.
+- `productName`: The name of the microphone.
 
 ### Permissions
 Ensure that you have the appropriate permissions for accessing the microphone on both Android and iOS. This plugin doesn't handle permissions.

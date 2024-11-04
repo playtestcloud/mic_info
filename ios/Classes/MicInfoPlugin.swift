@@ -7,7 +7,7 @@ public class MicInfoPlugin: NSObject, FlutterPlugin {
   // Register the plugin with the Flutter plugin registrar
   public static func register(with registrar: FlutterPluginRegistrar) {
     // Set up the communication channel between Flutter and iOS native code
-    let channel = FlutterMethodChannel(name: "mic_info", binaryMessenger: registrar.messenger())
+    let channel = FlutterMethodChannel(name: "dhiman/mic_info", binaryMessenger: registrar.messenger())
     
     // Create an instance of the plugin and set it as the method call delegate
     let instance = MicInfoPlugin()
@@ -18,27 +18,29 @@ public class MicInfoPlugin: NSObject, FlutterPlugin {
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     // Switch statement to handle different method calls
     switch call.method {
-        
-        // Case for getting the wired microphone
-        case "getWiredMicrophone":
-            // Check for permission before accessing microphones
-            CheckForPermission()
-            // Get the wired microphones and return the result to Flutter
-            let microphones = isWiredMicrophoneConnected()
+
+        // Case for getting the active microphones
+        case "getActiveMicrophones":
+            // Get the active microphones and return the result to Flutter
+            let microphones = getActiveMicrophones()
+            result(microphones)
+
+        // Case for getting the Bluetooth microphone
+        case "getBluetoothMicrophones":
+            // Get the Bluetooth microphones and return the result to Flutter
+            let microphones = getBluetoothMicrophones()
             result(microphones)
         
         // Case for getting the default built-in microphone
-        case "getDefaultMicrophone":
+        case "getDefaultMicrophones":
             // Get the default built-in microphones and return the result to Flutter
-            let microphones = isDefaultMicrophoneConnected()
+            let microphones = getDefaultMicrophones()
             result(microphones)
         
-        // Case for getting the Bluetooth microphone
-        case "getBluetoothMicrophone":
-            // Check for permission before accessing microphones
-            CheckForPermission()
-            // Get the Bluetooth microphones and return the result to Flutter
-            let microphones = isBluetoothMicrophoneConnected()
+        // Case for getting the wired microphone
+        case "getWiredMicrophones":
+            // Get the wired microphones and return the result to Flutter
+            let microphones = getWiredMicrophones()
             result(microphones)
         
         // Default case if the method is not implemented
