@@ -4,7 +4,6 @@ import android.content.Context
 import android.media.AudioDeviceInfo
 import android.media.AudioManager
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -25,27 +24,33 @@ class MicInfoPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
   // Called when the plugin is attached to the Flutter engine
   override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
     // Set up the MethodChannel for communication with Dart
-    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "mic_info")
+    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "dhiman/mic_info")
     channel.setMethodCallHandler(this) // Set the handler for method calls from Flutter
   }
 
   // Handles method calls from Flutter
-  @RequiresApi(Build.VERSION_CODES.M)
+  @RequiresApi(Build.VERSION_CODES.N)
   override fun onMethodCall(call: MethodCall, result: Result) {
     when(call.method){
-      "getWiredMicrophone" -> {
-        // If Flutter calls 'getWiredMicrophone', fetch the wired microphones and return
-        val microphones = getWiredMicrophone()
+      "getActiveMicrophones" -> {
+        // If Flutter calls 'getActiveMicrophones', fetch the active microphones and return
+        // A microphone is considered active if it's currently recording audio
+        val microphones = getActiveMicrophones()
         result.success(microphones)
       }
-      "getDefaultMicrophone" -> {
-        // If Flutter calls 'getDefaultMicrophone', fetch the default microphones and return
-        val microphones = getDefaultMicrophone()
+      "getBluetoothMicrophones" -> {
+        // If Flutter calls 'getBluetoothMicrophones', fetch the Bluetooth microphones and return
+        val microphones = getBluetoothMicrophones()
         result.success(microphones)
       }
-      "getBluetoothMicrophone" -> {
-        // If Flutter calls 'getBluetoothMicrophone', fetch the Bluetooth microphones and return
-        val microphones = getBluetoothMicrophone()
+      "getDefaultMicrophones" -> {
+        // If Flutter calls 'getDefaultMicrophones', fetch the default microphones and return
+        val microphones = getDefaultMicrophones()
+        result.success(microphones)
+      }
+      "getWiredMicrophones" -> {
+        // If Flutter calls 'getWiredMicrophones', fetch the wired microphones and return
+        val microphones = getWiredMicrophones()
         result.success(microphones)
       }
       else -> {
@@ -55,17 +60,51 @@ class MicInfoPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     }
   }
 
-  // Function to get the default (built-in) microphone of the device
+  // Function to get the active microphones of the active recording sessions
+  @RequiresApi(Build.VERSION_CODES.N)
+  private fun getActiveMicrophones(): List<Map<String, String>> {
+    val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+    val recordingConfigurations = audioManager.getActiveRecordingConfigurations();
+    val microphoneNames = mutableListOf<Map<String, String>>()
+
+    for (config in recordingConfigurations) {
+      val device = config.getAudioDevice()
+      // Check if the device is a supported device microphone
+      if (device.type == AudioDeviceInfo.TYPE_BLUETOOTH_SCO || device.type == AudioDeviceInfo.TYPE_BUILTIN_MIC || device.type == AudioDeviceInfo.TYPE_USB_HEADSET || device.type == AudioDeviceInfo.TYPE_WIRED_HEADSET ) {
+        // Add the microphone information (product name and id) to the list
+        microphoneNames.add(mapOf("productName" to device.productName.toString(), "id" to device.id.toString()))
+      }
+    }
+    return microphoneNames // Return the list of Bluetooth microphones
+  }
+
+  // Function to get the Bluetooth microphones of the device
   @RequiresApi(Build.VERSION_CODES.M)
-  private fun getDefaultMicrophone(): List<Map<String, Any>> {
+  private fun getBluetoothMicrophones(): List<Map<String, String>> {
     val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
     val devices = audioManager.getDevices(AudioManager.GET_DEVICES_INPUTS)
-    val microphoneNames = mutableListOf<Map<String, Any>>()
+    val microphoneNames = mutableListOf<Map<String, String>>()
+
+    for (device in devices) {
+      // Check if the device is a Bluetooth microphone
+      if (device.type == AudioDeviceInfo.TYPE_BLUETOOTH_SCO) {
+        // Add the microphone information (product name and id) to the list
+        microphoneNames.add(mapOf("productName" to device.productName.toString(), "id" to device.id.toString()))
+      }
+    }
+    return microphoneNames // Return the list of Bluetooth microphones
+  }
+
+  // Function to get the default (built-in) microphones of the device
+  @RequiresApi(Build.VERSION_CODES.M)
+  private fun getDefaultMicrophones(): List<Map<String, String>> {
+    val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+    val devices = audioManager.getDevices(AudioManager.GET_DEVICES_INPUTS)
+    val microphoneNames = mutableListOf<Map<String, String>>()
 
     for (device in devices) {
       // Check if the device is a built-in microphone
       if (device.type == AudioDeviceInfo.TYPE_BUILTIN_MIC) {
-        Log.d("dhiman", "getDefaultMicrophone: ${device.productName} ${device.id}")
         // Add the microphone information (product name and id) to the list
         microphoneNames.add(mapOf("productName" to device.productName.toString(), "id" to device.id.toString()))
       }
@@ -73,40 +112,21 @@ class MicInfoPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     return microphoneNames // Return the list of built-in microphones
   }
 
-  // Function to get the wired microphone (e.g. headset mic) of the device
+  // Function to get the wired microphones (e.g. headset mic) of the device
   @RequiresApi(Build.VERSION_CODES.M)
-  private fun getWiredMicrophone(): List<Map<String, Any>> {
+  private fun getWiredMicrophones(): List<Map<String, String>> {
     val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
     val devices = audioManager.getDevices(AudioManager.GET_DEVICES_INPUTS)
-    val microphoneNames = mutableListOf<Map<String, Any>>()
+    val microphoneNames = mutableListOf<Map<String, String>>()
 
     for (device in devices) {
       // Check if the device is a wired headset microphone
-      if (device.type == AudioDeviceInfo.TYPE_WIRED_HEADSET || device.type == AudioDeviceInfo.TYPE_USB_HEADSET) {
-        Log.d("dhiman", "getWiredMicrophone: ${device.productName} ${device.id}")
+      if (device.type == AudioDeviceInfo.TYPE_USB_HEADSET || device.type == AudioDeviceInfo.TYPE_WIRED_HEADSET) {
         // Add the microphone information (product name and id) to the list
         microphoneNames.add(mapOf("productName" to device.productName.toString(), "id" to device.id.toString()))
       }
     }
     return microphoneNames // Return the list of wired microphones
-  }
-
-  // Function to get the Bluetooth microphone of the device
-  @RequiresApi(Build.VERSION_CODES.M)
-  private fun getBluetoothMicrophone(): List<Map<String, Any>> {
-    val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-    val devices = audioManager.getDevices(AudioManager.GET_DEVICES_INPUTS)
-    val microphoneNames = mutableListOf<Map<String, Any>>()
-
-    for (device in devices) {
-      // Check if the device is a Bluetooth microphone
-      if (device.type == AudioDeviceInfo.TYPE_BLUETOOTH_SCO) {
-        Log.d("dhiman", "getBluetoothMicrophone: ${device.productName} ${device.id}")
-        // Add the microphone information (product name and id) to the list
-        microphoneNames.add(mapOf("productName" to device.productName.toString(), "id" to device.id.toString()))
-      }
-    }
-    return microphoneNames // Return the list of Bluetooth microphones
   }
 
   // Called when the plugin is attached to an activity

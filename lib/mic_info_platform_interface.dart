@@ -1,6 +1,6 @@
+import 'package:mic_info/mic_info_method_channel.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-import 'mic_info_method_channel.dart';
 
 /// An abstract class that represents the platform interface for accessing
 /// microphone information (wired, Bluetooth, default) in a Flutter plugin.
@@ -31,23 +31,30 @@ abstract class MicInfoPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  /// Abstract method to get the default microphone.
+  /// Abstract method to get the active microphones.
   /// This will throw an UnimplementedError unless overridden by a platform-specific class.
-  Future<dynamic> getDefaultMicrophone() {
+  Future<List<dynamic>> getActiveMicrophones() {
     throw UnimplementedError(
-        'getDefaultMicrophone() has not been implemented.');
+        'getActiveDevices() has not been implemented.');
   }
 
-  /// Abstract method to get the wired microphone.
+  /// Abstract method to get the Bluetooth microphones.
   /// This will throw an UnimplementedError unless overridden by a platform-specific class.
-  Future<dynamic> getWiredMicrophone() {
-    throw UnimplementedError('getWiredMicrophone() has not been implemented.');
-  }
-
-  /// Abstract method to get the Bluetooth microphone.
-  /// This will throw an UnimplementedError unless overridden by a platform-specific class.
-  Future<dynamic> getBluetoothMicrophone() {
+  Future<List<dynamic>> getBluetoothMicrophones() {
     throw UnimplementedError(
         'getBluetoothMicrophone() has not been implemented.');
+  }
+
+  /// Abstract method to get the default microphones.
+  /// This will throw an UnimplementedError unless overridden by a platform-specific class.
+  Future<List<dynamic>> getDefaultMicrophones() {
+    throw UnimplementedError(
+        'getDefaultMicrophones() has not been implemented.');
+  }
+
+  /// Abstract method to get the wired microphones.
+  /// This will throw an UnimplementedError unless overridden by a platform-specific class.
+  Future<List<dynamic>> getWiredMicrophones() {
+    throw UnimplementedError('getWiredMicrophones() has not been implemented.');
   }
 }
