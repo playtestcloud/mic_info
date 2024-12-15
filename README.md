@@ -80,5 +80,8 @@ For iOS, the plugin uses `AVAudioSession` to retrieve microphone information, in
 - Check that the connected microphones are supported by your device.
 
 ## Contributions
+- Special thanks to
+[GitHub: Cristian Zazo](https://github.com/Zazo032) for adding the active microphone feature.
+
 Contributions are welcome! Please feel free to submit pull requests or open issues.
 - GitHub: https://github.com/devakar-dhiman/mic_info.git

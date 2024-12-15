@@ -57,3 +57,43 @@ func getWiredMicrophones() -> [[String: Any]] {
     
     return listData
 }
+
+func CheckForPermission() {
+    // Initialize the shared AVAudioSession instance
+    let recordingSession = AVAudioSession.sharedInstance()
+
+    // Assign the session to Manager's recording session
+    Manager.recordingSession = recordingSession // Improved readability by using a local variable
+
+    do {
+        // Configure the audio session category and options
+        // Changes:
+        // - Added explicit category settings for better readability.
+        // - .allowBluetooth: Enables Bluetooth audio input/output.
+        // - .defaultToSpeaker: Defaults audio output to the device's speaker.
+        // - .mixWithOthers: Allows app audio to mix with other audio sessions.
+        // - .duckOthers: Temporarily reduces the volume of other audio while active.
+        try recordingSession.setCategory(.playAndRecord, options: [.allowBluetooth, .defaultToSpeaker, .mixWithOthers, .duckOthers])
+
+        try recordingSession.setActive(true)
+        // Request microphone access permission
+        recordingSession.requestRecordPermission { allowed in
+            DispatchQueue.main.async {
+                // Update Manager's microphone authorization status
+                // Changes:
+                // - Ensured updates happen on the main thread for thread safety.
+                Manager.micAuthorised = allowed
+
+                // Notify observers to update UI or handle state changes
+                // Changes:
+                // - Used Notification.Name for better practice.
+                NotificationCenter.default.post(name: Notification.Name("updateLabel"), object: nil)
+            }
+        }
+    } catch {
+        // Log the error if setting the category fails
+        // Changes:
+        // - Improved error message clarity to describe the specific failure context.
+        print("Failed to configure audio session: \(error.localizedDescription)")
+    }
+}

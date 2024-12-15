@@ -27,6 +27,8 @@ public class MicInfoPlugin: NSObject, FlutterPlugin {
 
         // Case for getting the Bluetooth microphone
         case "getBluetoothMicrophones":
+            // check for the microphone permission
+            checkForPermission()
             // Get the Bluetooth microphones and return the result to Flutter
             let microphones = getBluetoothMicrophones()
             result(microphones)
@@ -39,6 +41,8 @@ public class MicInfoPlugin: NSObject, FlutterPlugin {
         
         // Case for getting the wired microphone
         case "getWiredMicrophones":
+            // check for the microphone permission
+            checkForPermission()
             // Get the wired microphones and return the result to Flutter
             let microphones = getWiredMicrophones()
             result(microphones)
