@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.5]
+### Added
+- Added logic to check for microphone permission in ios devices.
+
 ## [0.0.4]
 ### Added
 - Fixed a bug related to ios apps for not detecting the bluetooth devices when app is opened after connecting the bluetooth device.

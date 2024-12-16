@@ -5,9 +5,8 @@ import AVFoundation
 /// - Returns: Array of dictionaries containing product name and id of active microphones
 func getActiveMicrophones() -> [[String: Any]] {
     var activeMicrophones: [[String: Any]] = []
-    let audioSession = AVAudioSession.sharedInstance()
-    
-    let currentRoute = audioSession.currentRoute
+    let audioSession = Manager.recordingSession
+    currentRoute = audioSession.currentRoute
     
     for input in currentRoute.inputs {
         activeMicrophones.append(["id": input.uid, "productName": input.portName])
@@ -21,7 +20,7 @@ func getActiveMicrophones() -> [[String: Any]] {
 func getBluetoothMicrophones() -> [[String: Any]] {
     var listData: [[String: Any]] = []
     
-    if let inputs = AVAudioSession.sharedInstance().availableInputs {
+    if let inputs = Manager.recordingSession.availableInputs {
         for input in inputs where input.portType == .bluetoothHFP {
             listData.append(["id": input.uid, "productName": input.portName])
         }
@@ -35,7 +34,7 @@ func getBluetoothMicrophones() -> [[String: Any]] {
 func getDefaultMicrophones() -> [[String: Any]] {
     var listData: [[String: Any]] = []
     
-    if let inputs = AVAudioSession.sharedInstance().availableInputs {
+    if let inputs = Manager.recordingSession.availableInputs {
         for input in inputs where input.portType == .builtInMic {
             listData.append(["id": input.uid, "productName": input.portName])
         }
@@ -49,7 +48,7 @@ func getDefaultMicrophones() -> [[String: Any]] {
 func getWiredMicrophones() -> [[String: Any]] {
     var listData: [[String: Any]] = []
     
-    if let inputs = AVAudioSession.sharedInstance().availableInputs {
+    if let inputs = Manager.recordingSession.availableInputs {
         for input in inputs where input.portType == .headsetMic {
             listData.append(["id": input.uid, "productName": input.portName])
         }
@@ -96,4 +95,15 @@ func CheckForPermission() {
         // - Improved error message clarity to describe the specific failure context.
         print("Failed to configure audio session: \(error.localizedDescription)")
     }
+}
+
+
+struct Manager {
+    //Required Objects - AVFoundation
+    ///AVAudio Session
+    static var recordingSession: AVAudioSession!
+    //Bool Values
+    ///Bool To check mic permission
+    static var micAuthorised = Bool()
+    
 }
