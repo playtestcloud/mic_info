@@ -1,7 +1,6 @@
 import 'package:mic_info/mic_info_method_channel.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-
 /// An abstract class that represents the platform interface for accessing
 /// microphone information (wired, Bluetooth, default) in a Flutter plugin.
 abstract class MicInfoPlatform extends PlatformInterface {
@@ -34,8 +33,7 @@ abstract class MicInfoPlatform extends PlatformInterface {
   /// Abstract method to get the active microphones.
   /// This will throw an UnimplementedError unless overridden by a platform-specific class.
   Future<List<dynamic>> getActiveMicrophones() {
-    throw UnimplementedError(
-        'getActiveDevices() has not been implemented.');
+    throw UnimplementedError('getActiveDevices() has not been implemented.');
   }
 
   /// Abstract method to get the Bluetooth microphones.

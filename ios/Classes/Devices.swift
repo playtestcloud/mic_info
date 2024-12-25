@@ -5,8 +5,8 @@ import AVFoundation
 /// - Returns: Array of dictionaries containing product name and id of active microphones
 func getActiveMicrophones() -> [[String: Any]] {
     var activeMicrophones: [[String: Any]] = []
-    let audioSession = Manager.recordingSession
-    currentRoute = audioSession.currentRoute
+    let audioSession = Manager.recordingSession!
+    let currentRoute = audioSession.currentRoute
     
     for input in currentRoute.inputs {
         activeMicrophones.append(["id": input.uid, "productName": input.portName])

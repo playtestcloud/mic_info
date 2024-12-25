@@ -4,14 +4,14 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'mic_info'
-  s.version          = '0.0.5'
-  s.summary          = 'A new Flutter plugin project.'
+  s.version          = '0.0.6'
+  s.summary          = 'Plugin that retrieves information about connected microphones.'
   s.description      = <<-DESC
-A new Flutter plugin project.
+ Mic Info Plugin is a Flutter plugin that retrieves information about connected microphones on Android and iOS. It supports detecting built-in, wired (including USB connector microphones), and Bluetooth microphones, making it ideal for applications requiring audio input management.
                        DESC
   s.homepage         = 'http://example.com'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
+  s.author           = { 'Devakar Dhiman' => 'devakardhiman2001@gmail.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'

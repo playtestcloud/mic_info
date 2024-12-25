@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.6]
+### Bug fix
+- fixed bugs and code structure
+
 ## [0.0.5]
 ### Added
 - Added logic to check for microphone permission in ios devices.

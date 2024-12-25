@@ -8,7 +8,7 @@ public class MicInfoPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
     // Set up the communication channel between Flutter and iOS native code
     let channel = FlutterMethodChannel(name: "dhiman/mic_info", binaryMessenger: registrar.messenger())
-    
+      
     // Create an instance of the plugin and set it as the method call delegate
     let instance = MicInfoPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
@@ -21,6 +21,8 @@ public class MicInfoPlugin: NSObject, FlutterPlugin {
 
         // Case for getting the active microphones
         case "getActiveMicrophones":
+            // check for the microphone permission
+            CheckForPermission()
             // Get the active microphones and return the result to Flutter
             let microphones = getActiveMicrophones()
             result(microphones)
@@ -28,13 +30,15 @@ public class MicInfoPlugin: NSObject, FlutterPlugin {
         // Case for getting the Bluetooth microphone
         case "getBluetoothMicrophones":
             // check for the microphone permission
-            checkForPermission()
+            CheckForPermission()
             // Get the Bluetooth microphones and return the result to Flutter
             let microphones = getBluetoothMicrophones()
             result(microphones)
         
         // Case for getting the default built-in microphone
         case "getDefaultMicrophones":
+            // check for the microphone permission
+            CheckForPermission()
             // Get the default built-in microphones and return the result to Flutter
             let microphones = getDefaultMicrophones()
             result(microphones)
@@ -42,7 +46,7 @@ public class MicInfoPlugin: NSObject, FlutterPlugin {
         // Case for getting the wired microphone
         case "getWiredMicrophones":
             // check for the microphone permission
-            checkForPermission()
+            CheckForPermission()
             // Get the wired microphones and return the result to Flutter
             let microphones = getWiredMicrophones()
             result(microphones)

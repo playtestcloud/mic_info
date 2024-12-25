@@ -63,8 +63,7 @@ class _MyAppState extends State<MyApp> {
             children: <Widget>[
               if (mics.isEmpty)
                 const Text('No microphones for the selected category'),
-              for (final mic in mics)
-                Text('${mic.productName} (${mic.id})'),
+              for (final mic in mics) Text('${mic.productName} (${mic.id})'),
             ],
           ),
         ),
