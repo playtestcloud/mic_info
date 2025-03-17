@@ -2,9 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.7]
+### Bug fix
+- Fixed bug in `getActiveMicrophones` when the information cannot be retrieved in Android.
+
 ## [0.0.6]
 ### Bug fix
-- fixed bugs and code structure
+- Fixed bugs and code structure
 
 ## [0.0.5]
 ### Added

@@ -10,7 +10,8 @@ class MethodChannelMicInfo extends MicInfoPlatform {
   @visibleForTesting
   final methodChannel = const MethodChannel('dhiman/mic_info');
 
-  /// Retrieves the Bluetooth microphone using a method channel call to the native platform.
+  /// Retrieves the active microphones using a method channel call to the native platform.
+  /// In Android, if the microphone cannot be retrieved, the method will return an empty list.
   @override
   Future<List<dynamic>> getActiveMicrophones() async {
     // Invoke the 'getCommunicationDevice' method on the method channel

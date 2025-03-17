@@ -68,7 +68,7 @@ class MicInfoPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     val microphoneNames = mutableListOf<Map<String, String>>()
 
     for (config in recordingConfigurations) {
-      val device = config.getAudioDevice()
+      val device = config.getAudioDevice() ?: continue
       // Check if the device is a supported device microphone
       if (device.type == AudioDeviceInfo.TYPE_BLUETOOTH_SCO || device.type == AudioDeviceInfo.TYPE_BUILTIN_MIC || device.type == AudioDeviceInfo.TYPE_USB_HEADSET || device.type == AudioDeviceInfo.TYPE_WIRED_HEADSET ) {
         // Add the microphone information (product name and id) to the list
